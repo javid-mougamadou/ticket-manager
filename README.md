@@ -46,16 +46,10 @@ These instructions will get you a copy of the project up and running on your loc
 ### Installation with Docker Compose
 
 
-1) Just run the local docker compose file. It will build the image for the service *api*, *db* (optional)
+Just run the local docker compose file. It will build the image and run the service *api*, *db* (optional)
 
 ```bash
-docker compose up -d
-```
-
-2) You can now enter inside the container
-
-```bash
-docker compose exec api bash
+docker compose up
 ```
 
 ## Getting Started
@@ -94,23 +88,17 @@ MEDIA_ROOT = '/data/media/'
 ### Runserver
 
 
-1) Go inside the backend container
+If you want, you can manually run the start-development.sh script in order to run the local server.
 
 ```bash
-docker compose exec api bash
-```
-
-2) You can run the start-development.sh script in order to run the local server.
-
-```bash
-bash scripts/start-development.sh
+docker compose exec api bash scripts/start-development.sh
 ```
 
 Otherwise you can manually apply the migration files and launch the runserver command.
 
 ```bash
-uv run manage.py migrate # Apply migrations
-uv run manage.py runserver 0.0.0.0:8000 # Run local server
+docker compose exec api uv run manage.py migrate # Apply migrations
+docker compose exec api uv run manage.py runserver 0.0.0.0:8000 # Run local server
 ```
 
 Now the Django server is exposed on http://localhost:8000
@@ -127,12 +115,35 @@ This API currently exposes theses endpoints :
 
 * Tickets : /api/tickets/
 
-## Linting
-
-We use PEP8 and Flake8/Black as tools for analyzing source code to flag programming errors, bugs, stylistic errors, and suspicious constructs.
+## Makefile
 
 ```bash
-bash scripts/run-linting.sh
+make
+Available commands:
+  make test         - Run unit tests
+  make cov          - Run tests with coverage
+  make format       - Format code using Ruff
+  make lint         - Lint code using Ruff
+  make black        - Format code using Black only
+  make run          - Start the Django development server
+  make reset-db     - Delete db.sqlite3 and run migrations
+  make check        - Format + Lint using Ruff
+```
+
+## Linting
+
+We use Ruff as Python linter and code formatter.
+
+```bash
+bash scripts/run-linting-ruff.sh
+
+make check
+```
+
+We also use PEP8 and Flake8/Black as tools for analyzing source code to flag programming errors, bugs, stylistic errors, and suspicious constructs.
+
+```bash
+bash scripts/run-linting-flake.sh
 ```
 
 ## Testing
@@ -142,8 +153,11 @@ We use pytest and pytest-django in order to run unit, integration and E2E tests.
 You can run the test-development.sh script.
 
 ```bash
-sh scripts/run-pytest.sh
-sh scripts/run-coverage.sh
+bash scripts/run-pytest.sh
+bash scripts/run-coverage.sh
+
+make test
+make cov
 ```
 
 Otherwise you can manually launch the pytest command.

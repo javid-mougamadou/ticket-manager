@@ -4,7 +4,7 @@ omit =
     */migrations/*
     ticket_manager/asgi.py
     ticket_manager/wsgi.py
-    ticket_manager/settings.py
+    ticket_manager/*settings.py
     */tests/*
 
 [report]

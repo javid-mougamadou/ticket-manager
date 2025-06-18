@@ -158,6 +158,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Import settings_local
 try:
-    from .local_settings import *
+    from .local_settings import *  # noqa: F403
 except ImportError as e:
     print(e)

@@ -11,4 +11,4 @@ COPY uv.lock .
 
 RUN uv sync
 
-CMD ["tail", "-f", "/dev/null"]
+CMD ["/bin/bash",  "scripts/start-development.sh"]

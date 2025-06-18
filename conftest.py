@@ -5,13 +5,16 @@ from ticket_manager.tickets.models import Ticket
 
 ### GHERKIN FIXTURE
 
+
 @pytest.fixture
 def client():
     return APIClient()
 
+
 @pytest.fixture
 def api_client():
     return APIClient()
+
 
 @pytest.fixture
 def tickets(db):
@@ -23,6 +26,7 @@ def tickets(db):
         for i in range(5)
     ]
 
+
 @pytest.fixture
 def ticket(db):
     return Ticket.objects.create(
@@ -30,9 +34,11 @@ def ticket(db):
         description="Test description",
     )
 
+
 @pytest.fixture
 def context():
     return {}
+
 
 @pytest.fixture
 def create_tickets(tickets):
